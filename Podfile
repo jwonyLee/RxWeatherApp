@@ -8,4 +8,5 @@ target 'RxWeatherApp' do
   # Pods for RxWeatherApp
   pod 'RxSwift', '6.1.0'
   pod 'RxCocoa', '6.1.0'
+  pod 'SwiftLint'
 end
