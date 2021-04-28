@@ -13,6 +13,7 @@
 		870BC37526369FBD000CD52B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 870BC37426369FBD000CD52B /* Assets.xcassets */; };
 		870BC37826369FBD000CD52B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870BC37626369FBD000CD52B /* LaunchScreen.storyboard */; };
 		870BC3932636A17C000CD52B /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 870BC3922636A17C000CD52B /* .swiftlint.yml */; };
+		87CFA3862639223E00D438D4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFA3852639223E00D438D4 /* MainViewController.swift */; };
 		FC02764D8C40D1FA309E3044 /* Pods_RxWeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D3201029ED767D33FE0516 /* Pods_RxWeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		870BC37726369FBD000CD52B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		870BC37926369FBD000CD52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		870BC3922636A17C000CD52B /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		87CFA3852639223E00D438D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A49E3D4381408BBFA67F8C72 /* Pods-RxWeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxWeatherApp.release.xcconfig"; path = "Target Support Files/Pods-RxWeatherApp/Pods-RxWeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		F48447577EE9494243046870 /* Pods-RxWeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxWeatherApp.debug.xcconfig"; path = "Target Support Files/Pods-RxWeatherApp/Pods-RxWeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 		870BC36A26369FBB000CD52B /* RxWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				870BC39C2636B745000CD52B /* Service */,
 				870BC3992636B647000CD52B /* Storyboard */,
 				870BC3982636B63B000CD52B /* Controller */,
 				870BC3972636B62D000CD52B /* ViewModel */,
@@ -101,6 +104,7 @@
 		870BC3982636B63B000CD52B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				87CFA3852639223E00D438D4 /* MainViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -112,6 +116,13 @@
 				870BC37626369FBD000CD52B /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		870BC39C2636B745000CD52B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		C4B06B005F0C10FC6864F05F /* Pods */ = {
@@ -257,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87CFA3862639223E00D438D4 /* MainViewController.swift in Sources */,
 				870BC36C26369FBB000CD52B /* AppDelegate.swift in Sources */,
 				870BC36E26369FBB000CD52B /* SceneDelegate.swift in Sources */,
 			);
