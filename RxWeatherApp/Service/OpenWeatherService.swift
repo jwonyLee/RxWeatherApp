@@ -16,6 +16,21 @@ class OpenWeatherService {
     private static let city = "seoul"
     private static var disposeBag = DisposeBag()
 
+    static func fetchWeatherDataForCityRx() -> Observable<Data> {
+        return Observable.create { emitter in
+            fetchWeatherDataForCity { result in
+                switch result {
+                case .success(let data):
+                    emitter.onNext(data)
+                    emitter.onCompleted()
+                case .failure(let error):
+                    emitter.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
     static func fetchWeatherDataForCity(completion: @escaping (Result<Data, Error>) -> Void) {
         var urlBuilder = URLComponents()
         urlBuilder.scheme = "https"
