@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -109,7 +108,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.87058823529411766" green="0.88627450980392153" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="cEw-sw-KG4" secondAttribute="centerY" constant="32" id="5EB-tu-YG5"/>
                             <constraint firstItem="kfQ-4C-7ww" firstAttribute="top" secondItem="cEw-sw-KG4" secondAttribute="bottom" constant="24" id="Btr-p3-2Tg"/>
@@ -117,6 +116,15 @@
                             <constraint firstItem="cEw-sw-KG4" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="b8F-m0-6fO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="WFY-d3-DGL" id="Z1l-4e-92M"/>
+                        <outlet property="cloudLabel" destination="uHq-AM-dAA" id="ftw-IV-cxT"/>
+                        <outlet property="iconImageView" destination="jxB-pF-7C0" id="82N-j2-9J8"/>
+                        <outlet property="statusLabel" destination="Idg-gk-qKk" id="hop-vA-RGE"/>
+                        <outlet property="temperatureLabel" destination="nuH-wo-5B3" id="4PL-Qm-XpS"/>
+                        <outlet property="waterLabel" destination="KV3-18-AIG" id="4Q1-2C-pIM"/>
+                        <outlet property="windLabel" destination="Fm3-4j-BCY" id="gzf-vm-1IY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,8 +136,5 @@
         <image name="cloud.drizzle" catalog="system" width="128" height="125"/>
         <image name="drop" catalog="system" width="101" height="128"/>
         <image name="wind" catalog="system" width="128" height="101"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
