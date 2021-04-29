@@ -11,7 +11,7 @@ struct WeatherInfo {
     var city: String
     var status: String
     var icon: String
-    var temp: Int
+    var temp: Double
     var windSpeed: Double
     var humidity: Int
     var cloud: Int
@@ -22,7 +22,7 @@ extension WeatherInfo {
         return WeatherInfo(city: from.name,
                            status: from.weather[0].description,
                            icon: from.weather[0].icon,
-                           temp: Int(from.main.temp),
+                           temp: from.main.temp.toCelsius(),
                            windSpeed: from.wind.speed,
                            humidity: from.main.humidity,
                            cloud: from.clouds.all)
