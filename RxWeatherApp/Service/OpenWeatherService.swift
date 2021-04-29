@@ -14,6 +14,10 @@ class OpenWeatherService {
     private static let host = "api.openweathermap.org"
     private static let path = "/data/2.5/weather"
     private static let city = "seoul"
+
+    private static let iconHost = "openweathermap.org"
+    private static let iconPath = "/img/wn/"
+
     private static var disposeBag = DisposeBag()
 
     static func fetchWeatherDataForCityRx() -> Observable<Data> {
@@ -59,5 +63,24 @@ class OpenWeatherService {
 
             completion(.success(data))
         }.resume()
+    }
+
+    static func fetchIcon(_ icon: String) -> Observable<UIImage?> {
+        return Observable<UIImage?>.create { emitter in
+            var urlBuilder = URLComponents()
+            urlBuilder.scheme = "http"
+            urlBuilder.host = iconHost
+            urlBuilder.path = iconPath + icon +  "@2x.png"
+
+            let imageUrl = URLRequest(url: urlBuilder.url!)
+            URLSession.shared.rx.response(request: imageUrl)
+                .subscribe(on: SerialDispatchQueueScheduler.init(qos: .default))
+                .subscribe(onNext: { _, data in
+                    let image = UIImage(data: data)
+                    emitter.onNext(image)
+                    emitter.onCompleted()
+                }).disposed(by: disposeBag)
+            return Disposables.create()
+        }
     }
 }

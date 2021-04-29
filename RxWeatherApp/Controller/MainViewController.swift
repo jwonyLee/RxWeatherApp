@@ -44,6 +44,13 @@ class MainViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.weatherObservable
+            .map { $0.icon }
+            .flatMap { OpenWeatherService.fetchIcon($0) }
+            .asDriver(onErrorJustReturn: UIImage(named: "sun.max"))
+            .drive(iconImageView.rx.image)
+            .disposed(by: disposeBag)
+
+        viewModel.weatherObservable
             .map { "\($0.temp)°C" }
             .asDriver(onErrorJustReturn: "17")
             .drive(temperatureLabel.rx.text)
