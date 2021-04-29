@@ -10,7 +10,7 @@ import RxSwift
 
 class MainViewModel {
 
-    var weatherObservable = BehaviorSubject<WeatherInfo>(value: WeatherInfo(city: "", status: "", icon: "", temp: 0, windSpeed: 0, humidity: 0, cloud: 0))
+    var weatherObservable = BehaviorSubject<WeatherInfo>(value: WeatherInfo(city: "", status: "", icon: "", temp: 0.toCelsius(), windSpeed: 0, humidity: 0, cloud: 0))
     var disposeBag = DisposeBag()
 
     init() {

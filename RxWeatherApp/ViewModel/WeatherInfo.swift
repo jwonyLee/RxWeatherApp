@@ -11,7 +11,7 @@ struct WeatherInfo {
     var city: String
     var status: String
     var icon: String
-    var temp: Double
+    var temp: String
     var windSpeed: Double
     var humidity: Int
     var cloud: Int

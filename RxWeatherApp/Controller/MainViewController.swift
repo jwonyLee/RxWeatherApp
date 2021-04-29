@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.weatherObservable
-            .map { "\($0.temp)°C" }
+            .map { $0.temp }
             .asDriver(onErrorJustReturn: "17")
             .drive(temperatureLabel.rx.text)
             .disposed(by: disposeBag)
