@@ -10,11 +10,12 @@ import RxSwift
 
 class MainViewModel {
 
-    var weatherObservable = PublishSubject<WeatherInfo>()
+    var weatherObservable: Observable<WeatherInfo>
     var disposeBag = DisposeBag()
 
     init() {
-        OpenWeatherService.fetchWeatherData()
+        weatherObservable = OpenWeatherService.fetchWeatherData()
+            .subscribe(on: ConcurrentDispatchQueueScheduler.init(qos: .background))
             .map { data in
                 let response = try! JSONDecoder().decode(OpenWeatherData.self, from: data)
                 return response
@@ -22,7 +23,6 @@ class MainViewModel {
             .map { weather in
                 return WeatherInfo.toWeatherInfo(from: weather)
             }
-            .bind(to: weatherObservable)
-            .disposed(by: disposeBag)
+            .asObservable()
     }
 }
