@@ -31,7 +31,11 @@ class OpenWeatherService {
                 URLQueryItem(name: "appid", value: apiKey)
             ]
 
-            let url = urlBuilder.url!
+            guard let url = urlBuilder.url else {
+                emitter.onError(NSError(domain: "URL Not Found", code: 404, userInfo: nil))
+                return Disposables.create()
+            }
+
             let request = URLRequest(url: url)
             URLSession.shared.rx.data(request: request)
                 .subscribe { data in
