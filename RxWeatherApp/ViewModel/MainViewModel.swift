@@ -14,7 +14,7 @@ class MainViewModel {
     var disposeBag = DisposeBag()
 
     init() {
-        OpenWeatherService.fetchWeatherDataForCityRx()
+        OpenWeatherService.fetchWeatherData()
             .map { data in
                 let response = try! JSONDecoder().decode(OpenWeatherData.self, from: data)
                 return response

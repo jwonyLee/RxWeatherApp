@@ -20,49 +20,29 @@ class OpenWeatherService {
 
     private static var disposeBag = DisposeBag()
 
-    static func fetchWeatherDataForCityRx() -> Observable<Data> {
-        return Observable.create { emitter in
-            fetchWeatherDataForCity { result in
-                switch result {
-                case .success(let data):
+    static func fetchWeatherData() -> Observable<Data> {
+        return Observable<Data>.create { emitter in
+            var urlBuilder = URLComponents()
+            urlBuilder.scheme = "https"
+            urlBuilder.host = host
+            urlBuilder.path = path
+            urlBuilder.queryItems = [
+                URLQueryItem(name: "q", value: city),
+                URLQueryItem(name: "appid", value: apiKey)
+            ]
+
+            let url = urlBuilder.url!
+            let request = URLRequest(url: url)
+            URLSession.shared.rx.data(request: request)
+                .subscribe { data in
                     emitter.onNext(data)
-                    emitter.onCompleted()
-                case .failure(let error):
+                } onError: { error in
                     emitter.onError(error)
-                }
-            }
+                } onCompleted: {
+                    emitter.onCompleted()
+                }.disposed(by: disposeBag)
             return Disposables.create()
         }
-    }
-
-    static func fetchWeatherDataForCity(completion: @escaping (Result<Data, Error>) -> Void) {
-        var urlBuilder = URLComponents()
-        urlBuilder.scheme = "https"
-        urlBuilder.host = host
-        urlBuilder.path = path
-        urlBuilder.queryItems = [
-            URLQueryItem(name: "q", value: city),
-            URLQueryItem(name: "appid", value: apiKey)
-        ]
-
-        let url = urlBuilder.url!
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            guard let data = data else {
-                let httpResponse = response as! HTTPURLResponse
-                completion(.failure(NSError(domain: "no data",
-                                            code: httpResponse.statusCode,
-                                            userInfo: nil)))
-                return
-            }
-
-            completion(.success(data))
-        }.resume()
     }
 
     static func fetchIcon(_ icon: String) -> Observable<UIImage?> {
