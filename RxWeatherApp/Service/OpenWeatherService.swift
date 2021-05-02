@@ -49,15 +49,20 @@ class OpenWeatherService {
         }
     }
 
-    static func fetchIcon(_ icon: String) -> Observable<UIImage?> {
+    static func fetchWeatherIcon(_ icon: String) -> Observable<UIImage?> {
         return Observable<UIImage?>.create { emitter in
             var urlBuilder = URLComponents()
             urlBuilder.scheme = "http"
             urlBuilder.host = iconHost
             urlBuilder.path = iconPath + icon +  "@2x.png"
 
-            let imageUrl = URLRequest(url: urlBuilder.url!)
-            URLSession.shared.rx.response(request: imageUrl)
+            guard let url = urlBuilder.url else {
+                emitter.onError(NSError(domain: "URL Not Found", code: 404, userInfo: nil))
+                return Disposables.create()
+            }
+
+            let request = URLRequest(url: url)
+            URLSession.shared.rx.response(request: request)
                 .subscribe(on: SerialDispatchQueueScheduler.init(qos: .default))
                 .subscribe(onNext: { _, data in
                     let image = UIImage(data: data)
