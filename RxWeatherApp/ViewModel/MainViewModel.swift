@@ -15,7 +15,6 @@ class MainViewModel {
 
     init() {
         weatherObservable = OpenWeatherService.fetchWeatherData()
-            .subscribe(on: ConcurrentDispatchQueueScheduler.init(qos: .background))
             .map { data in
                 let response = try! JSONDecoder().decode(OpenWeatherData.self, from: data)
                 return response
