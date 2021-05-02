@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class OpenWeatherService {
-    private static let apiKey = "5b168d400d481fa8aa11454e712b30ea"
+    private static let apiKey = "{your API Key}"
     private static let host = "api.openweathermap.org"
     private static let path = "/data/2.5/weather"
     private static let city = "seoul"
