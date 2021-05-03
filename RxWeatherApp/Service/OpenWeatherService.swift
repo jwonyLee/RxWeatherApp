@@ -33,23 +33,4 @@ class OpenWeatherService {
             return Disposables.create()
         }
     }
-
-    static func fetchWeatherIcon(endpoint: EndPoint) -> Observable<UIImage?> {
-        return Observable<UIImage?>.create { emitter in
-            guard let url = URL.init(string: endpoint.url) else {
-                emitter.onError(NSError(domain: "URL Not Found", code: 404, userInfo: nil))
-                return Disposables.create()
-            }
-
-            let request = URLRequest(url: url)
-            URLSession.shared.rx.response(request: request)
-                .subscribe(on: SerialDispatchQueueScheduler.init(qos: .default))
-                .subscribe(onNext: { _, data in
-                    let image = UIImage(data: data)
-                    emitter.onNext(image)
-                    emitter.onCompleted()
-                }).disposed(by: disposeBag)
-            return Disposables.create()
-        }
-    }
 }
