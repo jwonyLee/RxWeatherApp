@@ -45,7 +45,13 @@ class MainViewController: UIViewController {
 
         viewModel.weatherObservable
             .map { $0.icon }
-            .flatMap { OpenWeatherService.fetchWeatherIcon($0) }
+            .map {
+                let iconEndpoint = EndpointCases.getIcon(name: $0)
+                return iconEndpoint
+            }
+            .flatMap {
+                OpenWeatherService.fetchWeatherIcon(endpoint: $0)
+            }
             .asDriver(onErrorJustReturn: UIImage(named: "sun.max"))
             .drive(iconImageView.rx.image)
             .disposed(by: disposeBag)

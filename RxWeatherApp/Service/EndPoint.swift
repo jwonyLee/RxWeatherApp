@@ -9,6 +9,7 @@ import Foundation
 
 protocol EndPoint {
     var httpMethod: String { get }
+    var scheme: String { get }
     var baseURLString: String { get }
     var path: String { get }
     var query: [String: String]? { get }
@@ -17,7 +18,22 @@ protocol EndPoint {
 extension EndPoint {
     // a default extension that creates the full URL
     var url: String {
-        return baseURLString + path
+        guard let query = query else {
+            return baseURLString + path
+        }
+        var urlBuilder = URLComponents()
+        urlBuilder.scheme = scheme
+        urlBuilder.host = baseURLString
+        urlBuilder.path = path
+        urlBuilder.queryItems = query.map {
+            URLQueryItem(name: $0.key, value: $0.value)
+        }
+
+        guard let url = urlBuilder.url?.absoluteString else {
+            return baseURLString + path
+        }
+
+        return url
     }
 }
 
@@ -32,6 +48,15 @@ enum EndpointCases: EndPoint {
             return "GET"
         case .getIcon:
             return "GET"
+        }
+    }
+
+    var scheme: String {
+        switch self {
+        case .getWeather:
+            return "https"
+        case .getIcon:
+            return "http"
         }
     }
 
@@ -53,7 +78,7 @@ enum EndpointCases: EndPoint {
         }
     }
 
-    var query: [String : String]? {
+    var query: [String: String]? {
         switch self {
         case .getWeather(let city):
             return ["q": city,

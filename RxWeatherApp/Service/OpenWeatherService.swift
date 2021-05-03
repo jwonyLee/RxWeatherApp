@@ -10,33 +10,18 @@ import RxSwift
 import RxCocoa
 
 class OpenWeatherService {
-    private static let apiKey = Secret.apiKey
-    private static let host = "api.openweathermap.org"
-    private static let path = "/data/2.5/weather"
-    private static let city = "seoul"
-
-    private static let iconHost = "openweathermap.org"
-    private static let iconPath = "/img/wn/"
-
     private static var disposeBag = DisposeBag()
 
-    static func fetchWeatherData() -> Observable<Data> {
+    static func fetchWeatherData(endpoint: EndPoint) -> Observable<Data> {
         return Observable<Data>.create { emitter in
-            var urlBuilder = URLComponents()
-            urlBuilder.scheme = "https"
-            urlBuilder.host = host
-            urlBuilder.path = path
-            urlBuilder.queryItems = [
-                URLQueryItem(name: "q", value: city),
-                URLQueryItem(name: "appid", value: apiKey)
-            ]
-
-            guard let url = urlBuilder.url else {
+            guard let url = URL(string: endpoint.url) else {
                 emitter.onError(NSError(domain: "URL Not Found", code: 404, userInfo: nil))
                 return Disposables.create()
             }
 
-            let request = URLRequest(url: url)
+            var request = URLRequest(url: url)
+            request.httpMethod = endpoint.httpMethod
+
             URLSession.shared.rx.data(request: request)
                 .subscribe { data in
                     emitter.onNext(data)
@@ -49,14 +34,9 @@ class OpenWeatherService {
         }
     }
 
-    static func fetchWeatherIcon(_ icon: String) -> Observable<UIImage?> {
+    static func fetchWeatherIcon(endpoint: EndPoint) -> Observable<UIImage?> {
         return Observable<UIImage?>.create { emitter in
-            var urlBuilder = URLComponents()
-            urlBuilder.scheme = "http"
-            urlBuilder.host = iconHost
-            urlBuilder.path = iconPath + icon +  "@2x.png"
-
-            guard let url = urlBuilder.url else {
+            guard let url = URL.init(string: endpoint.url) else {
                 emitter.onError(NSError(domain: "URL Not Found", code: 404, userInfo: nil))
                 return Disposables.create()
             }
